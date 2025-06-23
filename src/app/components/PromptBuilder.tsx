@@ -5,51 +5,13 @@ import ToneSelector from "./ToneSelector";
 import AdvancedControls from "./AdvancedControls";
 import ContextHandling from "./ContextHandling";
 import PromptPreview from "./PromptPreview";
+import { theme } from "@/lib/utils";
 
 const PromptBuilder = () => {
   const [isDarkMode, setIsDarkMode] = useState(false);
 
   const toggleTheme = () => {
     setIsDarkMode(!isDarkMode);
-  };
-
-  const theme = {
-    dark: {
-      bg: "bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900",
-      text: {
-        primary: "text-white",
-        secondary: "text-white/70",
-        muted: "text-white/50",
-        accent: "text-white/60",
-      },
-      card: "bg-white/10 backdrop-blur-xl border border-white/20 hover:bg-white/15",
-      input:
-        "bg-black/20 border border-white/30 text-white placeholder-white/40 focus:bg-black/30 focus:border-blue-400/50",
-      badge: "bg-black/20 backdrop-blur-sm",
-      glows: {
-        blue: "bg-blue-500/10",
-        purple: "bg-purple-500/10",
-        indigo: "bg-indigo-500/5",
-      },
-    },
-    light: {
-      bg: "bg-gradient-to-br from-slate-50 via-blue-50 to-indigo-100",
-      text: {
-        primary: "text-slate-900",
-        secondary: "text-slate-600",
-        muted: "text-slate-500",
-        accent: "text-slate-700",
-      },
-      card: "bg-white/80 backdrop-blur-xl border border-slate-200/50 hover:bg-white/90 shadow-lg",
-      input:
-        "bg-white/50 border border-slate-300 text-slate-900 placeholder-slate-400 focus:bg-white/70 focus:border-blue-400",
-      badge: "bg-white/80 backdrop-blur-sm",
-      glows: {
-        blue: "bg-blue-200/30",
-        purple: "bg-purple-200/30",
-        indigo: "bg-indigo-200/20",
-      },
-    },
   };
 
   const currentTheme = isDarkMode ? theme.dark : theme.light;
@@ -214,18 +176,6 @@ const PromptBuilder = () => {
               </div>
             </div>
 
-            <div className=" p-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full mb-6  transition-all duration-300 hover:scale-105 col-span-1 xl:col-span-2 w-fit m-auto ">
-              <div className={`${currentTheme.badge} rounded-full px-6 py-2`}>
-                <button className={`${currentTheme.text.secondary} w-full`}>
-                  Generate Text
-                </button>
-              </div>
-            </div>
-
-            {/* Theme Toggle Button - full width row */}
-            <div className=""></div>
-
-            {/* Preview Panel - full width */}
             <div className="col-span-1 xl:col-span-2">
               <PromptPreview theme={currentTheme} isDarkMode={isDarkMode} />
             </div>

@@ -5,8 +5,10 @@ export type PropsTypes = {
             primary: string;
             accent: string;
             muted: string;
+            secondary: string
         };
         input: string
+        badge: string
     };
     isDarkMode?: boolean;
 };

@@ -1,6 +1,13 @@
+import { usePrompt } from "@/context/PromptContext";
 import { PropsTypes } from "@/lib/types";
+import { useState } from "react";
 
 const PurposeInput = ({ theme }: PropsTypes) => {
+  const [inputText, setInputText] = useState("");
+  const [isTouched, setIsTouched] = useState(false);
+
+  const { setPromptData } = usePrompt();
+
   return (
     <div className="group relative">
       <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-3xl blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
@@ -26,6 +33,14 @@ const PurposeInput = ({ theme }: PropsTypes) => {
 
         <div className="relative">
           <textarea
+            onChange={(e) => setInputText(e.target.value)}
+            onFocus={() => setIsTouched(true)}
+            onBlur={() =>
+              setPromptData((prev) => ({
+                ...prev,
+                purposeStep: inputText,
+              }))
+            }
             placeholder="Enter your detailed prompt description here..."
             className={`w-full h-40 ${theme.input} rounded-2xl p-6 focus:outline-none resize-none transition-all duration-300 text-lg`}
           />
@@ -33,13 +48,22 @@ const PurposeInput = ({ theme }: PropsTypes) => {
         </div>
 
         <div className="mt-4 flex items-center justify-between">
-          <span className={`${theme.text.muted} text-sm`}>
-            Craft your perfect prompt foundation
+          <span
+            className={`text-sm ${
+              isTouched && inputText.length < 10
+                ? "text-red-900 font-medium  opacity-70"
+                : `${theme.text.muted}`
+            }`}
+          >
+            {isTouched && inputText.length < 10
+              ? "Text should be greater than 10 characters"
+              : "Craft your perfect prompt foundation"}
           </span>
+
           <div className="flex items-center gap-2">
             <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
             <span className={`${theme.text.accent} text-sm font-mono`}>
-              0/1000
+              {inputText.length || 0}/1000
             </span>
           </div>
         </div>

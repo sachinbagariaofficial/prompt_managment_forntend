@@ -1,6 +1,25 @@
+import { usePrompt } from "@/context/PromptContext";
 import { PropsTypes } from "@/lib/types";
 
 const AdvancedControls = ({ theme, isDarkMode }: PropsTypes) => {
+  const trackBase = isDarkMode ? "bg-black/20" : "bg-slate-200";
+
+  const { promptData, setPromptData } = usePrompt();
+
+  const handleAdvancedChange = (
+    key: "temperature" | "topK" | "topP",
+    value: string
+  ) => {
+    setPromptData((prev) => ({
+      ...prev,
+      toneStep: "",
+      advancedStep: {
+        ...prev.advancedStep,
+        [key]: Number(value),
+      },
+    }));
+  };
+
   return (
     <div className="group relative">
       <div className="absolute -inset-1 bg-gradient-to-r from-green-500 to-teal-600 rounded-3xl blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
@@ -10,7 +29,7 @@ const AdvancedControls = ({ theme, isDarkMode }: PropsTypes) => {
         <div className="flex items-center gap-4 mb-6">
           <div className="relative">
             <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-teal-600 rounded-2xl flex items-center justify-center shadow-lg">
-              <span className="text-white font-bold text-lg">3</span>
+              <span className="text-white font-bold text-lg">4</span>
             </div>
             <div className="absolute -inset-1 bg-gradient-to-r from-green-500 to-teal-600 rounded-2xl blur opacity-30"></div>
           </div>
@@ -35,27 +54,40 @@ const AdvancedControls = ({ theme, isDarkMode }: PropsTypes) => {
                 } px-3 py-1 rounded-lg`}
               >
                 <span className={`${theme.text.primary} font-mono text-sm`}>
-                  0.7
+                  {promptData.advancedStep.temperature}
                 </span>
               </div>
             </div>
             <div className="relative">
               <div
-                className={`w-full h-3 ${
-                  isDarkMode ? "bg-black/20" : "bg-slate-200"
-                } rounded-full overflow-hidden`}
+                className={`w-full h-3 ${trackBase} rounded-full overflow-hidden`}
               >
                 <div
                   className="h-full bg-gradient-to-r from-blue-400 to-purple-500 rounded-full"
-                  style={{ width: "35%" }}
-                ></div>
+                  style={{
+                    width: `${
+                      (promptData.advancedStep.temperature / 2) * 100
+                    }%`,
+                  }}
+                />
               </div>
-              <div className="absolute top-0 left-0 w-full h-full rounded-full bg-gradient-to-r from-blue-400/20 to-purple-500/20 animate-pulse"></div>
+              <div className="absolute top-0 left-0 w-full h-full rounded-full bg-gradient-to-r from-blue-400/20 to-purple-500/20 animate-pulse" />
+              <input
+                type="range"
+                min={0}
+                max={2}
+                step={0.1}
+                onChange={(e) =>
+                  handleAdvancedChange("temperature", e.target.value)
+                }
+                value={promptData.advancedStep.temperature}
+                className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
+              />
             </div>
             <div
               className={`flex justify-between text-xs ${theme.text.muted} mt-2`}
             >
-              <span>Conservative</span>
+              <span>Balanced</span>
               <span>Creative</span>
             </div>
           </div>
@@ -72,22 +104,37 @@ const AdvancedControls = ({ theme, isDarkMode }: PropsTypes) => {
                 } px-3 py-1 rounded-lg`}
               >
                 <span className={`${theme.text.primary} font-mono text-sm`}>
-                  40
+                  {promptData.advancedStep.topK}
                 </span>
               </div>
             </div>
             <div className="relative">
               <div
-                className={`w-full h-3 ${
-                  isDarkMode ? "bg-black/20" : "bg-slate-200"
-                } rounded-full overflow-hidden`}
+                className={`w-full h-3 ${trackBase} rounded-full overflow-hidden`}
               >
                 <div
                   className="h-full bg-gradient-to-r from-green-400 to-teal-500 rounded-full"
-                  style={{ width: "40%" }}
-                ></div>
+                  style={{
+                    width: `${(promptData.advancedStep.topK / 10) * 100}%`,
+                  }}
+                />
               </div>
-              <div className="absolute top-0 left-0 w-full h-full rounded-full bg-gradient-to-r from-green-400/20 to-teal-500/20 animate-pulse delay-200"></div>
+              <div className="absolute top-0 left-0 w-full h-full rounded-full bg-gradient-to-r from-green-400/20 to-teal-500/20 animate-pulse delay-200" />
+              <input
+                type="range"
+                min={0}
+                max={10}
+                step={1}
+                value={promptData.advancedStep.topK}
+                onChange={(e) => handleAdvancedChange("topK", e.target.value)}
+                className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
+              />
+            </div>
+            <div
+              className={`flex justify-between text-xs ${theme.text.muted} mt-2`}
+            >
+              <span>Focused</span>
+              <span>Wide Range</span>
             </div>
           </div>
 
@@ -103,22 +150,35 @@ const AdvancedControls = ({ theme, isDarkMode }: PropsTypes) => {
                 } px-3 py-1 rounded-lg`}
               >
                 <span className={`${theme.text.primary} font-mono text-sm`}>
-                  0.9
+                  {promptData.advancedStep.topP.toFixed(2)}
                 </span>
               </div>
             </div>
             <div className="relative">
               <div
-                className={`w-full h-3 ${
-                  isDarkMode ? "bg-black/20" : "bg-slate-200"
-                } rounded-full overflow-hidden`}
+                className={`w-full h-3 ${trackBase} rounded-full overflow-hidden`}
               >
                 <div
                   className="h-full bg-gradient-to-r from-purple-400 to-pink-500 rounded-full"
-                  style={{ width: "90%" }}
-                ></div>
+                  style={{ width: `${promptData.advancedStep.topP * 100}%` }}
+                />
               </div>
-              <div className="absolute top-0 left-0 w-full h-full rounded-full bg-gradient-to-r from-purple-400/20 to-pink-500/20 animate-pulse delay-400"></div>
+              <div className="absolute top-0 left-0 w-full h-full rounded-full bg-gradient-to-r from-purple-400/20 to-pink-500/20 animate-pulse delay-400" />
+              <input
+                type="range"
+                min={0}
+                max={1}
+                step={0.01}
+                value={promptData.advancedStep.topP}
+                onChange={(e) => handleAdvancedChange("topP", e.target.value)}
+                className="absolute top-0 left-0 w-full h-full opacity-0 cursor-pointer"
+              />
+            </div>
+            <div
+              className={`flex justify-between text-xs ${theme.text.muted} mt-2`}
+            >
+              <span>Strict</span>
+              <span>Flexible</span>
             </div>
           </div>
         </div>

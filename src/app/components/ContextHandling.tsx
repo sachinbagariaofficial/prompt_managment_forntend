@@ -1,24 +1,9 @@
+import { usePrompt } from "@/context/PromptContext";
 import { PropsTypes } from "@/lib/types";
+import { contextMethods } from "@/lib/utils";
 
 const ContextHandling = ({ theme, isDarkMode }: PropsTypes) => {
-  const contextMethods = [
-    {
-      value: "context-window",
-      label: "Context Window",
-      desc: "Fixed memory allocation for consistent processing",
-      icon: "📊",
-      selected: true,
-    },
-    {
-      value: "sliding-window",
-      label: "Sliding Window",
-      desc: "Dynamic memory management with adaptive flow",
-      icon: "🔄",
-      selected: false,
-    },
-  ];
-
-  // const contextSizes = ["1K", "2K", "4K", "8K", "16K"];
+  const { promptData, setPromptData } = usePrompt();
 
   return (
     <div className="group relative">
@@ -29,7 +14,7 @@ const ContextHandling = ({ theme, isDarkMode }: PropsTypes) => {
         <div className="flex items-center gap-4 mb-8">
           <div className="relative">
             <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-600 rounded-2xl flex items-center justify-center shadow-lg">
-              <span className="text-white font-bold text-lg">4</span>
+              <span className="text-white font-bold text-lg">3</span>
             </div>
             <div className="absolute -inset-1 bg-gradient-to-r from-orange-500 to-red-600 rounded-2xl blur opacity-30"></div>
           </div>
@@ -50,8 +35,14 @@ const ContextHandling = ({ theme, isDarkMode }: PropsTypes) => {
             {contextMethods.map((method) => (
               <div
                 key={method.value}
+                onClick={() =>
+                  setPromptData((prev) => ({
+                    ...prev,
+                    contextStep: method.value,
+                  }))
+                }
                 className={`relative p-5 rounded-2xl border transition-all duration-300 cursor-pointer ${
-                  method.selected
+                  method.value === promptData.contextStep
                     ? "bg-gradient-to-r from-orange-500/20 to-red-500/20 border-orange-400/40"
                     : `${
                         isDarkMode
@@ -72,7 +63,7 @@ const ContextHandling = ({ theme, isDarkMode }: PropsTypes) => {
                       {method.desc}
                     </div>
                   </div>
-                  {method.selected && (
+                  {method.value === promptData.contextStep && (
                     <div className="w-4 h-4 bg-orange-400 rounded-full animate-pulse"></div>
                   )}
                 </div>
@@ -80,37 +71,6 @@ const ContextHandling = ({ theme, isDarkMode }: PropsTypes) => {
             ))}
           </div>
         </div>
-
-        {/* Context Size */}
-        {/* <div>
-          <h3 className={`${theme.text.primary} font-medium mb-4`}>
-            Memory Allocation
-          </h3>
-          <div className="grid grid-cols-5 gap-3">
-            {contextSizes.map((size, index) => (
-              <div
-                key={size}
-                className={`relative p-4 rounded-xl border text-center transition-all duration-300 cursor-pointer ${
-                  index === 2
-                    ? "bg-gradient-to-r from-orange-500/20 to-red-500/20 border-orange-400/40"
-                    : `${
-                        isDarkMode
-                          ? "bg-white/5 border-white/20 hover:bg-white/10 hover:border-white/30"
-                          : "bg-slate-50/50 border-slate-200 hover:bg-slate-100/50 hover:border-slate-300"
-                      }`
-                }`}
-              >
-                <div className={`${theme.text.primary} font-semibold`}>
-                  {size}
-                </div>
-                <div className={`${theme.text.muted} text-xs mt-1`}>tokens</div>
-                {index === 2 && (
-                  <div className="absolute top-1 right-1 w-2 h-2 bg-orange-400 rounded-full animate-pulse"></div>
-                )}
-              </div>
-            ))}
-          </div>
-        </div> */}
       </div>
     </div>
   );

@@ -1,36 +1,27 @@
+import { usePrompt } from "@/context/PromptContext";
 import { PropsTypes } from "@/lib/types";
+import { tones, toneSettingsMap } from "@/lib/utils";
 
 const ToneSelector = ({ theme, isDarkMode }: PropsTypes) => {
-  const tones = [
-    {
-      value: "professional",
-      label: "Professional",
-      desc: "Formal",
-      icon: "💼",
-      color: "from-blue-500 to-cyan-500",
-    },
-    {
-      value: "creative",
-      label: "Creative",
-      desc: "Innovative",
-      icon: "🎨",
-      color: "from-purple-500 to-pink-500",
-    },
-    {
-      value: "technical",
-      label: "Technical",
-      desc: "Detailed",
-      icon: "⚙️",
-      color: "from-green-500 to-teal-500",
-    },
-    {
-      value: "empathetic",
-      label: "Empathetic",
-      desc: "Understanding",
-      icon: "💚",
-      color: "from-rose-500 to-orange-500",
-    },
-  ];
+  const { promptData, setPromptData } = usePrompt();
+
+  const handleTone = (
+    value: "professional" | "creative" | "technical" | "empathetic"
+  ) => {
+    setPromptData((prev) => ({
+      ...prev,
+      toneStep: value,
+    }));
+
+    const advanceDefault = toneSettingsMap[value];
+
+    setPromptData((prev) => ({
+      ...prev,
+      advancedStep: advanceDefault,
+    }));
+
+    console.log("firs22t", value, advanceDefault);
+  };
 
   return (
     <div className="group relative">
@@ -54,11 +45,20 @@ const ToneSelector = ({ theme, isDarkMode }: PropsTypes) => {
         </div>
 
         <div className="grid grid-cols-2 gap-4">
-          {tones.map((tone, index) => (
+          {tones.map((tone) => (
             <div
-              key={tone.value}
+              key={tone.key}
+              onClick={() =>
+                handleTone(
+                  tone.value as
+                    | "professional"
+                    | "creative"
+                    | "technical"
+                    | "empathetic"
+                )
+              }
               className={`group/tone relative p-4 rounded-2xl border transition-all duration-300 cursor-pointer ${
-                index === 0
+                tone.value === promptData.toneStep
                   ? `bg-gradient-to-r from-blue-500/20 to-cyan-500/20 border-blue-400/40`
                   : `${
                       isDarkMode
@@ -78,7 +78,7 @@ const ToneSelector = ({ theme, isDarkMode }: PropsTypes) => {
                   </div>
                 </div>
               </div>
-              {index === 0 && (
+              {tone.value === promptData.toneStep && (
                 <div className="absolute top-2 right-2 w-3 h-3 bg-blue-400 rounded-full animate-pulse"></div>
               )}
             </div>
