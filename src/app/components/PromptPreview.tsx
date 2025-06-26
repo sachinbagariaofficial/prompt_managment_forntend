@@ -1,7 +1,6 @@
 import { usePrompt } from "@/context/PromptContext";
 import { PropsTypes } from "@/lib/types";
 import { useState } from "react";
-
 import clipboardCopy from "clipboard-copy";
 
 const PromptPreview = ({ theme, isDarkMode }: PropsTypes) => {
@@ -16,24 +15,19 @@ const PromptPreview = ({ theme, isDarkMode }: PropsTypes) => {
       if (promptData.purposeStep.length > 10) {
         setIsLoading(true);
         setShowPromtResult(false);
-        console.log("promptData", promptData);
-        const data = await fetch(
-          "http://127.0.0.1:8000/",
 
-          {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({
-              prompt: promptData.purposeStep,
-              temperature: promptData.advancedStep.temperature,
-              top_p: promptData.advancedStep.topP,
-              top_k: promptData.advancedStep.topK,
-              context: promptData.contextStep || "",
-            }),
-          }
-        );
+        const data = await fetch("http://127.0.0.1:8000/", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            prompt: promptData.purposeStep,
+            temperature: promptData.advancedStep.temperature,
+            top_p: promptData.advancedStep.topP,
+            top_k: promptData.advancedStep.topK,
+            context: promptData.contextStep || "",
+          }),
+        });
+
         const {
           data: {
             choices: [
@@ -43,16 +37,16 @@ const PromptPreview = ({ theme, isDarkMode }: PropsTypes) => {
             ],
           },
         } = await data.json();
+
         setAiResponse(promptResponse);
-        console.log("resposne", promptResponse);
         setIsLoading(false);
         setShowPromtResult(true);
       } else {
-        alert("Please enter pormpt text");
+        alert("Please enter prompt text");
       }
     } catch (err) {
       setIsLoading(false);
-      console.error("Error while generating the response", err);
+      console.error("Error while generating response", err);
     }
   };
 
@@ -66,12 +60,12 @@ const PromptPreview = ({ theme, isDarkMode }: PropsTypes) => {
 
   return (
     <div>
-      <div className=" cursor-pointer p-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full mb-15 mt-10 transition-all duration-300 hover:scale-105 col-span-1 xl:col-span-2 w-fit m-auto ">
+      <div className="cursor-pointer p-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full mt-10 mb-12 w-fit mx-auto transition-transform hover:scale-105">
         <div className={`${theme.badge} rounded-full px-6 py-2`}>
           <button
             onClick={generateText}
             type="button"
-            className={`${theme.text.secondary} w-full`}
+            className={`${theme.text.secondary} text-sm sm:text-base`}
           >
             {isLoading ? "Loading..." : "Generate Text"}
           </button>
@@ -79,95 +73,106 @@ const PromptPreview = ({ theme, isDarkMode }: PropsTypes) => {
       </div>
 
       {showPromtResult && (
-        <div className="group relative h-full">
+        <div className="group relative">
           <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-purple-600 rounded-3xl blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
+
           <div
-            className={`relative ${theme.card} rounded-3xl p-8 transition-all duration-500 h-full`}
+            className={`relative ${theme.card} rounded-3xl p-6 sm:p-8 transition-all duration-500`}
           >
-            <div className="flex items-center justify-between mb-6">
+            {/* Header */}
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
               <div>
-                <h2 className={`text-2xl font-bold ${theme.text.primary} mb-1`}>
+                <h2
+                  className={`text-xl sm:text-2xl font-bold ${theme.text.primary} mb-1`}
+                >
                   Live Preview
                 </h2>
-                <p className={`${theme.text.accent}`}>
+                <p className={`${theme.text.accent} text-sm sm:text-base`}>
                   Generated prompt output
                 </p>
               </div>
-              <div className="flex gap-3">
+              <div className="flex gap-3 w-full sm:w-auto">
                 <button
                   onClick={copyPromtResponse}
-                  className={`px-4 py-2 ${
+                  className={`w-full sm:w-auto px-4 py-2 ${
                     isDarkMode
                       ? "bg-white/10 hover:bg-white/20 border-white/20"
                       : "bg-slate-100 hover:bg-slate-200 border-slate-300"
                   } border rounded-xl ${
                     theme.text.primary
-                  } text-sm transition-all duration-300 hover:scale-105`}
+                  } text-sm transition-transform hover:scale-105`}
                 >
                   {textCopied ? "Copied!" : "Copy"}
                 </button>
-                <button className="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 rounded-xl text-white text-sm transition-all duration-300 hover:scale-105 shadow-lg">
+                <button className="w-full sm:w-auto px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 rounded-xl text-white text-sm transition-transform hover:scale-105 shadow-lg">
                   Export
                 </button>
               </div>
             </div>
 
+            {/* Content */}
             <div className="relative">
               <div
                 className={`${
                   isDarkMode ? "bg-black/30" : "bg-slate-100/50"
-                } backdrop-blur-sm rounded-2xl p-6 border ${
+                } backdrop-blur-sm rounded-2xl p-4 pb-8 sm:p-6 sm:pb-10 border ${
                   isDarkMode ? "border-white/10" : "border-slate-200"
-                } `}
+                }`}
               >
                 <div
                   className={`space-y-4 ${
                     isDarkMode ? "text-white/80" : "text-slate-700"
                   } text-sm font-mono leading-relaxed`}
                 >
+                  {/* Purpose */}
                   <div>
-                    <div className="text-blue-400  font-bold mb-2">
+                    <div className="text-blue-400 font-bold mb-2">
                       System Instructions:
                     </div>
                     <div
-                      className={`${
+                      className={`p-3 rounded-lg ${
                         isDarkMode
                           ? "text-white bg-white/5"
                           : "text-black bg-slate-200/30"
-                      } p-3 rounded-lg`}
+                      }`}
                     >
                       {promptData.purposeStep}
                     </div>
                   </div>
-                  {promptData.toneStep.length ? (
+
+                  {/* Tone */}
+                  {promptData.toneStep.length > 0 && (
                     <div>
-                      <div className="text-purple-400  font-bold ">
+                      <div className="text-purple-400 font-bold mb-2">
                         Communication Style:
                       </div>
                       <div
-                        className={`${
+                        className={`capitalize ${
                           isDarkMode ? "text-white" : "text-black"
-                        } capitalize`}
+                        }`}
                       >
                         {promptData.toneStep}
                       </div>
                     </div>
-                  ) : null}
+                  )}
 
+                  {/* Context */}
                   <div>
-                    <div className="text-orange-400  font-bold ">
+                    <div className="text-orange-400 font-bold mb-2">
                       Context Management:
                     </div>
                     <div
-                      className={`${
+                      className={`capitalize ${
                         isDarkMode ? "text-white" : "text-black"
-                      } capitalize`}
+                      }`}
                     >
-                      {promptData.contextStep.split("-").join(" ")}
+                      {promptData.contextStep.replace(/-/g, " ")}
                     </div>
                   </div>
+
+                  {/* Model Params */}
                   <div>
-                    <div className="text-green-400  font-bold">
+                    <div className="text-green-400 font-bold mb-2">
                       Model Parameters:
                     </div>
                     <div
@@ -183,41 +188,31 @@ const PromptPreview = ({ theme, isDarkMode }: PropsTypes) => {
                     </div>
                   </div>
 
-                  <div className="mb-6">
+                  {/* AI Output */}
+                  <div>
                     <div
-                      className={`${
+                      className={`font-bold mb-2 ${
                         isDarkMode ? "text-[#00e8ff]" : "text-black"
-                      } font-bold mb-2 `}
+                      }`}
                     >
                       Generated AI Response:
                     </div>
                     <div
-                      className={`${
+                      className={`p-3 rounded-lg capitalize max-h-[400px] overflow-y-auto ${
                         isDarkMode
                           ? "text-white bg-white/5"
                           : "text-black bg-slate-200/30"
-                      } p-3 rounded-lg capitalize`}
+                      }`}
                     >
                       {aiResposne}
                     </div>
                   </div>
                 </div>
 
-                {/* Animated gradient overlay */}
-                {/* <div
-              className={`absolute inset-0 rounded-2xl ${
-                isDarkMode
-                  ? "bg-gradient-to-t from-black/50"
-                  : "bg-gradient-to-t from-white/50"
-              } via-transparent to-transparent pointer-events-none`}
-            ></div> */}
-              </div>
-
-              {/* Floating indicators */}
-              <div
-                className={`absolute bottom-4 right-4 flex items-center gap-4 ${theme.text.accent} text-sm`}
-              >
-                <div className="flex items-center gap-2">
+                {/* Footer Indicator */}
+                <div
+                  className={`absolute bottom-2 right-4 flex items-center gap-2 ${theme.text.accent} text-xs sm:text-sm`}
+                >
                   <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
                   <span>Live</span>
                 </div>

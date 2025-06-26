@@ -14,23 +14,30 @@ const PurposeInput = ({ theme }: PropsTypes) => {
       <div
         className={`relative ${theme.card} rounded-3xl p-8 transition-all duration-500`}
       >
-        <div className="flex items-center gap-4 mb-6">
-          <div className="relative">
+        {/* Header Section: Step + Title + Description */}
+        <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-6">
+          {/* Step Circle */}
+          <div className="relative w-fit">
             <div className="w-12 h-12 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl flex items-center justify-center shadow-lg">
               <span className="text-white font-bold text-lg">1</span>
             </div>
             <div className="absolute -inset-1 bg-gradient-to-r from-blue-500 to-indigo-600 rounded-2xl blur opacity-30"></div>
           </div>
-          <div>
-            <h2 className={`text-2xl font-bold ${theme.text.primary} mb-1`}>
+
+          {/* Heading and Subheading */}
+          <div className="flex flex-col">
+            <h2
+              className={`text-xl sm:text-2xl font-bold ${theme.text.primary} mb-1`}
+            >
               Define Purpose
             </h2>
-            <p className={`${theme.text.accent}`}>
+            <p className={`${theme.text.accent} text-sm sm:text-base`}>
               Describe your AI assistant primary objective
             </p>
           </div>
         </div>
 
+        {/* Textarea */}
         <div className="relative">
           <textarea
             name="prompt"
@@ -43,16 +50,17 @@ const PurposeInput = ({ theme }: PropsTypes) => {
               }))
             }
             placeholder="Enter your detailed prompt description here..."
-            className={`w-full h-40  max-h-60  min-h-30 ${theme.input} rounded-2xl p-6 focus:outline-none  transition-all duration-300`}
+            className={`w-full  max-h-60 min-h-36 ${theme.input} rounded-2xl p-6 focus:outline-none transition-all duration-300`}
           />
           <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-2xl pointer-events-none opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
         </div>
 
-        <div className="mt-4 flex items-center justify-between">
+        {/* Validation + Counter */}
+        <div className="mt-4 flex items-center justify-between flex-wrap gap-2">
           <span
             className={`text-sm ${
               isTouched && inputText.length < 10
-                ? "text-red-900 font-medium  opacity-70"
+                ? "text-red-900 font-medium opacity-70"
                 : `${theme.text.muted}`
             }`}
           >

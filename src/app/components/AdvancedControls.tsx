@@ -24,20 +24,24 @@ const AdvancedControls = ({ theme, isDarkMode }: PropsTypes) => {
     <div className="group relative">
       <div className="absolute -inset-1 bg-gradient-to-r from-green-500 to-teal-600 rounded-3xl blur opacity-25 group-hover:opacity-40 transition duration-1000"></div>
       <div
-        className={`relative ${theme.card} rounded-3xl p-8 transition-all duration-500`}
+        className={`relative ${theme.card} rounded-3xl p-6 sm:p-8 transition-all duration-500`}
       >
-        <div className="flex items-center gap-4 mb-6">
-          <div className="relative">
+        <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-8">
+          <div className="relative w-fit">
             <div className="w-12 h-12 bg-gradient-to-r from-green-500 to-teal-600 rounded-2xl flex items-center justify-center shadow-lg">
               <span className="text-white font-bold text-lg">4</span>
             </div>
             <div className="absolute -inset-1 bg-gradient-to-r from-green-500 to-teal-600 rounded-2xl blur opacity-30"></div>
           </div>
           <div>
-            <h2 className={`text-2xl font-bold ${theme.text.primary} mb-1`}>
+            <h2
+              className={`text-xl sm:text-2xl font-bold ${theme.text.primary} mb-1`}
+            >
               Advanced
             </h2>
-            <p className={`${theme.text.accent}`}>Fine-tune AI parameters</p>
+            <p className={`${theme.text.accent} text-sm sm:text-base`}>
+              Fine-tune AI parameters
+            </p>
           </div>
         </div>
 
@@ -45,7 +49,9 @@ const AdvancedControls = ({ theme, isDarkMode }: PropsTypes) => {
           {/* Temperature */}
           <div className="relative">
             <div className="flex justify-between items-center mb-4">
-              <label className={`${theme.text.primary} font-medium`}>
+              <label
+                className={`${theme.text.primary} font-medium text-sm sm:text-base`}
+              >
                 Temperature
               </label>
               <div
@@ -53,7 +59,9 @@ const AdvancedControls = ({ theme, isDarkMode }: PropsTypes) => {
                   isDarkMode ? "bg-black/30" : "bg-slate-200/50"
                 } px-3 py-1 rounded-lg`}
               >
-                <span className={`${theme.text.primary} font-mono text-sm`}>
+                <span
+                  className={`${theme.text.primary} font-mono text-xs sm:text-sm`}
+                >
                   {promptData.advancedStep.temperature}
                 </span>
               </div>
@@ -85,7 +93,7 @@ const AdvancedControls = ({ theme, isDarkMode }: PropsTypes) => {
               />
             </div>
             <div
-              className={`flex justify-between text-xs ${theme.text.muted} mt-2`}
+              className={`flex justify-between text-xs sm:text-sm ${theme.text.muted} mt-2`}
             >
               <span>Balanced</span>
               <span>Creative</span>
@@ -95,7 +103,9 @@ const AdvancedControls = ({ theme, isDarkMode }: PropsTypes) => {
           {/* Top-K */}
           <div className="relative">
             <div className="flex justify-between items-center mb-4">
-              <label className={`${theme.text.primary} font-medium`}>
+              <label
+                className={`${theme.text.primary} font-medium text-sm sm:text-base`}
+              >
                 Top-K
               </label>
               <div
@@ -103,7 +113,9 @@ const AdvancedControls = ({ theme, isDarkMode }: PropsTypes) => {
                   isDarkMode ? "bg-black/30" : "bg-slate-200/50"
                 } px-3 py-1 rounded-lg`}
               >
-                <span className={`${theme.text.primary} font-mono text-sm`}>
+                <span
+                  className={`${theme.text.primary} font-mono text-xs sm:text-sm`}
+                >
                   {promptData.advancedStep.topK}
                 </span>
               </div>
@@ -131,7 +143,7 @@ const AdvancedControls = ({ theme, isDarkMode }: PropsTypes) => {
               />
             </div>
             <div
-              className={`flex justify-between text-xs ${theme.text.muted} mt-2`}
+              className={`flex justify-between text-xs sm:text-sm ${theme.text.muted} mt-2`}
             >
               <span>Focused</span>
               <span>Wide Range</span>
@@ -141,7 +153,9 @@ const AdvancedControls = ({ theme, isDarkMode }: PropsTypes) => {
           {/* Top-P */}
           <div className="relative">
             <div className="flex justify-between items-center mb-4">
-              <label className={`${theme.text.primary} font-medium`}>
+              <label
+                className={`${theme.text.primary} font-medium text-sm sm:text-base`}
+              >
                 Top-P
               </label>
               <div
@@ -149,7 +163,9 @@ const AdvancedControls = ({ theme, isDarkMode }: PropsTypes) => {
                   isDarkMode ? "bg-black/30" : "bg-slate-200/50"
                 } px-3 py-1 rounded-lg`}
               >
-                <span className={`${theme.text.primary} font-mono text-sm`}>
+                <span
+                  className={`${theme.text.primary} font-mono text-xs sm:text-sm`}
+                >
                   {promptData.advancedStep.topP.toFixed(2)}
                 </span>
               </div>
@@ -175,7 +191,7 @@ const AdvancedControls = ({ theme, isDarkMode }: PropsTypes) => {
               />
             </div>
             <div
-              className={`flex justify-between text-xs ${theme.text.muted} mt-2`}
+              className={`flex justify-between text-xs sm:text-sm ${theme.text.muted} mt-2`}
             >
               <span>Strict</span>
               <span>Flexible</span>

@@ -11,26 +11,34 @@ const ContextHandling = ({ theme, isDarkMode }: PropsTypes) => {
       <div
         className={`relative ${theme.card} rounded-3xl p-8 transition-all duration-500`}
       >
-        <div className="flex items-center gap-4 mb-8">
-          <div className="relative">
+        {/* Heading Section (Step + Title + Subheading) */}
+        <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-8">
+          <div className="relative w-fit">
             <div className="w-12 h-12 bg-gradient-to-r from-orange-500 to-red-600 rounded-2xl flex items-center justify-center shadow-lg">
               <span className="text-white font-bold text-lg">3</span>
             </div>
             <div className="absolute -inset-1 bg-gradient-to-r from-orange-500 to-red-600 rounded-2xl blur opacity-30"></div>
           </div>
-          <div>
-            <h2 className={`text-2xl font-bold ${theme.text.primary} mb-1`}>
+          <div className="flex flex-col">
+            <h2
+              className={`text-xl sm:text-2xl font-bold ${theme.text.primary} mb-1`}
+            >
               Context Handling
             </h2>
-            <p className={`${theme.text.accent}`}>Memory management strategy</p>
+            <p className={`${theme.text.accent} text-sm sm:text-base`}>
+              Memory management strategy
+            </p>
           </div>
         </div>
 
-        {/* Method Selection */}
+        {/* Method Selection Section */}
         <div className="mb-8">
-          <h3 className={`${theme.text.primary} font-medium mb-4`}>
+          <h3
+            className={`${theme.text.primary} font-medium mb-4 text-base sm:text-lg`}
+          >
             Processing Method
           </h3>
+
           <div className="space-y-3">
             {contextMethods.map((method) => (
               <div
@@ -51,11 +59,11 @@ const ContextHandling = ({ theme, isDarkMode }: PropsTypes) => {
                       }`
                 }`}
               >
-                <div className="flex items-center gap-4">
+                <div className="flex flex-col sm:flex-row sm:items-center gap-4">
                   <div className="text-3xl">{method.icon}</div>
                   <div className="flex-1">
                     <div
-                      className={`${theme.text.primary} font-semibold text-lg`}
+                      className={`${theme.text.primary} font-semibold text-base sm:text-lg`}
                     >
                       {method.label}
                     </div>

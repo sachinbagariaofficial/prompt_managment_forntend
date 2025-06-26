@@ -29,22 +29,29 @@ const ToneSelector = ({ theme, isDarkMode }: PropsTypes) => {
       <div
         className={`relative ${theme.card} rounded-3xl p-8 transition-all duration-500`}
       >
-        <div className="flex items-center gap-4 mb-6">
-          <div className="relative">
+        {/* Step Heading Section */}
+        <div className="flex flex-col sm:flex-row sm:items-center gap-4 mb-6">
+          <div className="relative w-fit">
             <div className="w-12 h-12 bg-gradient-to-r from-purple-500 to-pink-600 rounded-2xl flex items-center justify-center shadow-lg">
               <span className="text-white font-bold text-lg">2</span>
             </div>
             <div className="absolute -inset-1 bg-gradient-to-r from-purple-500 to-pink-600 rounded-2xl blur opacity-30"></div>
           </div>
-          <div>
-            <h2 className={`text-2xl font-bold ${theme.text.primary} mb-1`}>
+
+          <div className="flex flex-col">
+            <h2
+              className={`text-xl sm:text-2xl font-bold ${theme.text.primary} mb-1`}
+            >
               Select Tone
             </h2>
-            <p className={`${theme.text.accent}`}>Choose communication style</p>
+            <p className={`${theme.text.accent} text-sm sm:text-base`}>
+              Choose communication style
+            </p>
           </div>
         </div>
 
-        <div className="grid grid-cols-2 gap-4">
+        {/* Tone Selector Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           {tones.map((tone) => (
             <div
               key={tone.key}

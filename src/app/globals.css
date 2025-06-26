@@ -23,6 +23,8 @@ body {
   background: var(--background);
   color: var(--foreground);
   font-family: Geist Mono, Helvetica, sans-serif;
+  height: 100dvh;
+  /* overflow: hidden; */
 }
 button {
   cursor: pointer;

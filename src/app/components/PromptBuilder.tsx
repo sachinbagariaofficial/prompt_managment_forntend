@@ -61,7 +61,7 @@ const PromptBuilder = () => {
         <div className="absolute right-0 bottom-0 w-px h-full bg-gradient-to-t from-transparent via-pink-500/50 to-transparent animate-moveUp"></div>
       </div>
 
-      <div className="absolute top-6 right-6 z-20">
+      <div className="absolute top-2 sm:top-4 right-6 z-20">
         <button
           onClick={toggleTheme}
           className={`group relative p-3 ${currentTheme.card} rounded-2xl transition-all duration-300 hover:scale-105`}
@@ -95,7 +95,7 @@ const PromptBuilder = () => {
       </div>
 
       <div className="relative z-10 container mx-auto px-4 py-12">
-        <div className="text-center mb-16">
+        <div className="text-center mb-16 mt-7 sm:mt-0">
           <div className="inline-block p-1 bg-gradient-to-r from-blue-500 to-purple-600 rounded-full mb-6">
             <div className={`${currentTheme.badge} rounded-full px-6 py-2`}>
               <span className={`${currentTheme.text.secondary} font-medium`}>
@@ -103,8 +103,9 @@ const PromptBuilder = () => {
               </span>
             </div>
           </div>
+
           <h1
-            className={`text-6xl font-bold bg-gradient-to-r ${
+            className={`text-4xl sm:text-5xl md:text-6xl font-bold bg-gradient-to-r ${
               isDarkMode
                 ? "from-white via-blue-100 to-purple-200"
                 : "from-slate-900 via-blue-900 to-purple-900"
@@ -112,8 +113,10 @@ const PromptBuilder = () => {
           >
             LLM Prompt Builder
           </h1>
+
+          {/* Full text for small screens (mobile) */}
           <p
-            className={`${currentTheme.text.secondary} text-xl max-w-2xl mx-auto leading-relaxed`}
+            className={`${currentTheme.text.secondary} text-base sm:text-lg md:hidden max-w-xl mx-auto leading-relaxed`}
           >
             Craft{" "}
             <strong
@@ -141,11 +144,19 @@ const PromptBuilder = () => {
               {" "}
               follow the steps
             </strong>{" "}
-            below to get your desired result
+            below to get your desired result.
+          </p>
+
+          {/* Shortened version for tablets/desktops */}
+          <p
+            className={`${currentTheme.text.secondary} text-lg hidden md:block max-w-xl mx-auto leading-relaxed`}
+          >
+            Create smarter prompts using advanced AI parameters — follow the
+            steps below.
           </p>
         </div>
 
-        <div className="max-w-7xl mx-auto px-4">
+        <div className="max-w-7xl mx-auto">
           <div className="grid grid-cols-1 xl:grid-cols-2 gap-8">
             {/* Configuration Panel */}
             <div className="xl:col-span-2 space-y-8">
