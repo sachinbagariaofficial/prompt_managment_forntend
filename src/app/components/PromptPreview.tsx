@@ -16,17 +16,20 @@ const PromptPreview = ({ theme, isDarkMode }: PropsTypes) => {
         setIsLoading(true);
         setShowPromtResult(false);
 
-        const data = await fetch("http://127.0.0.1:8000/", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({
-            prompt: promptData.purposeStep,
-            temperature: promptData.advancedStep.temperature,
-            top_p: promptData.advancedStep.topP,
-            top_k: promptData.advancedStep.topK,
-            context: promptData.contextStep || "",
-          }),
-        });
+        const data = await fetch(
+          "https://prompt-managment.onrender.com/prompt",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({
+              prompt: promptData.purposeStep,
+              temperature: promptData.advancedStep.temperature,
+              top_p: promptData.advancedStep.topP,
+              top_k: promptData.advancedStep.topK,
+              context: promptData.contextStep || "",
+            }),
+          }
+        );
 
         const {
           data: {
