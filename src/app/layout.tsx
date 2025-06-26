@@ -35,18 +35,18 @@ export const metadata: Metadata = {
       "AI Prompt Tuner | Fine-Tune LLM Prompts with Temperature, Top-P & Top-K",
     description:
       "Craft and test prompts with full control over LLM behavior using temperature, top-p, top-k, and memory strategies. Built for developers, researchers, and AI builders.",
-    url: "https://yourdomain.com",
+    url: "https://prompt-managment-forntend.vercel.app/",
     type: "website",
     images: [
       {
-        url: "https://yourdomain.com/og-image.png",
+        url: "./favicon.ico",
         width: 1200,
         height: 630,
         alt: "LLM Prompt Tuner UI",
       },
     ],
   },
-  metadataBase: new URL("https://yourdomain.com"),
+  metadataBase: new URL("https://sachinbagaria.onrender.com/"),
 };
 
 export default function RootLayout({

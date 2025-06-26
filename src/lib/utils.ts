@@ -60,7 +60,7 @@ export const tones = [
         key: 2,
         value: "technical",
         label: "Technical",
-        desc: "Detailed",
+        desc: "Precise",
         icon: "⚙️",
         color: "from-green-500 to-teal-500",
     },
