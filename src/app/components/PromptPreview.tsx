@@ -1,39 +1,67 @@
 import { usePrompt } from "@/context/PromptContext";
 import { PropsTypes } from "@/lib/types";
 import { useState } from "react";
-import { useCopyToClipboard } from "../hooks/useCopyToClipboard";
+
+import clipboardCopy from "clipboard-copy";
 
 const PromptPreview = ({ theme, isDarkMode }: PropsTypes) => {
-  const [showPromtResult, setShowPromtResult] = useState(true);
+  const [showPromtResult, setShowPromtResult] = useState(false);
   const { promptData } = usePrompt();
   const [isLoading, setIsLoading] = useState(false);
-  const { copyText, copied } = useCopyToClipboard();
   const [aiResposne, setAiResponse] = useState("");
+  const [textCopied, setTextCopied] = useState(false);
 
   const generateText = async () => {
     try {
-      setIsLoading(true);
-      const data = await fetch(
-        "https://",
+      if (promptData.purposeStep.length > 10) {
+        setIsLoading(true);
+        setShowPromtResult(false);
+        console.log("promptData", promptData);
+        const data = await fetch(
+          "http://127.0.0.1:8000/",
 
-        {
-          method: "POST",
-          body: JSON.stringify({
-            text: "whta is ao",
-          }),
-        }
-      );
-      const resposne = await data.json();
-      setAiResponse(resposne);
-      setShowPromtResult(true);
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({
+              prompt: promptData.purposeStep,
+              temperature: promptData.advancedStep.temperature,
+              top_p: promptData.advancedStep.topP,
+              top_k: promptData.advancedStep.topK,
+              context: promptData.contextStep || "",
+            }),
+          }
+        );
+        const {
+          data: {
+            choices: [
+              {
+                message: { content: promptResponse },
+              },
+            ],
+          },
+        } = await data.json();
+        setAiResponse(promptResponse);
+        console.log("resposne", promptResponse);
+        setIsLoading(false);
+        setShowPromtResult(true);
+      } else {
+        alert("Please enter pormpt text");
+      }
     } catch (err) {
       setIsLoading(false);
       console.error("Error while generating the response", err);
     }
   };
 
-  const copyPromtResponse = () => {
-    copyText("hello");
+  const copyPromtResponse = async () => {
+    if (aiResposne.length > 0) {
+      await clipboardCopy(aiResposne);
+      setTextCopied(true);
+      setTimeout(() => setTextCopied(false), 3000);
+    }
   };
 
   return (
@@ -42,6 +70,7 @@ const PromptPreview = ({ theme, isDarkMode }: PropsTypes) => {
         <div className={`${theme.badge} rounded-full px-6 py-2`}>
           <button
             onClick={generateText}
+            type="button"
             className={`${theme.text.secondary} w-full`}
           >
             {isLoading ? "Loading..." : "Generate Text"}
@@ -75,7 +104,7 @@ const PromptPreview = ({ theme, isDarkMode }: PropsTypes) => {
                     theme.text.primary
                   } text-sm transition-all duration-300 hover:scale-105`}
                 >
-                  {copied ? "Copied!" : "Copy"}
+                  {textCopied ? "Copied!" : "Copy"}
                 </button>
                 <button className="px-4 py-2 bg-gradient-to-r from-blue-500 to-purple-600 hover:from-blue-600 hover:to-purple-700 rounded-xl text-white text-sm transition-all duration-300 hover:scale-105 shadow-lg">
                   Export
@@ -110,25 +139,29 @@ const PromptPreview = ({ theme, isDarkMode }: PropsTypes) => {
                       {promptData.purposeStep}
                     </div>
                   </div>
-                  <div>
-                    <div className="text-purple-400  font-bold ">
-                      Communication Style:
+                  {promptData.toneStep.length ? (
+                    <div>
+                      <div className="text-purple-400  font-bold ">
+                        Communication Style:
+                      </div>
+                      <div
+                        className={`${
+                          isDarkMode ? "text-white" : "text-black"
+                        } capitalize`}
+                      >
+                        {promptData.toneStep}
+                      </div>
                     </div>
-                    <div
-                      className={`${
-                        isDarkMode ? "text-white" : "text-black"
-                      } capitalize`}
-                    >
-                      {promptData.toneStep}
-                    </div>
-                  </div>
+                  ) : null}
 
                   <div>
                     <div className="text-orange-400  font-bold ">
                       Context Management:
                     </div>
                     <div
-                      className={`${isDarkMode ? "text-white" : "text-black"}`}
+                      className={`${
+                        isDarkMode ? "text-white" : "text-black"
+                      } capitalize`}
                     >
                       {promptData.contextStep.split("-").join(" ")}
                     </div>
@@ -138,13 +171,15 @@ const PromptPreview = ({ theme, isDarkMode }: PropsTypes) => {
                       Model Parameters:
                     </div>
                     <div
-                      className={`${isDarkMode ? "text-white" : "text-black"}`}
+                      className={`${
+                        isDarkMode ? "text-white" : "text-black"
+                      } capitalize`}
                     >
                       <div>
                         • Temperature: {promptData.advancedStep.temperature}
                       </div>
-                      <div>• Top-K: {promptData.advancedStep.temperature}</div>
-                      <div>• Top-P:{promptData.advancedStep.temperature}</div>
+                      <div>• Top-K: {promptData.advancedStep.topK}</div>
+                      <div>• Top-P: {promptData.advancedStep.topP}</div>
                     </div>
                   </div>
 
@@ -161,7 +196,7 @@ const PromptPreview = ({ theme, isDarkMode }: PropsTypes) => {
                         isDarkMode
                           ? "text-white bg-white/5"
                           : "text-black bg-slate-200/30"
-                      } p-3 rounded-lg`}
+                      } p-3 rounded-lg capitalize`}
                     >
                       {aiResposne}
                     </div>

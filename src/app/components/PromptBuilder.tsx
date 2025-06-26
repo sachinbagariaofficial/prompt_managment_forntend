@@ -141,7 +141,7 @@ const PromptBuilder = () => {
               {" "}
               follow the steps
             </strong>{" "}
-            below to get your desired result.
+            below to get your desired result
           </p>
         </div>
 

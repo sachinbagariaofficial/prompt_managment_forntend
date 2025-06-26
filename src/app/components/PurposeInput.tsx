@@ -33,6 +33,7 @@ const PurposeInput = ({ theme }: PropsTypes) => {
 
         <div className="relative">
           <textarea
+            name="prompt"
             onChange={(e) => setInputText(e.target.value)}
             onFocus={() => setIsTouched(true)}
             onBlur={() =>
@@ -42,7 +43,7 @@ const PurposeInput = ({ theme }: PropsTypes) => {
               }))
             }
             placeholder="Enter your detailed prompt description here..."
-            className={`w-full h-40 ${theme.input} rounded-2xl p-6 focus:outline-none resize-none transition-all duration-300 text-lg`}
+            className={`w-full h-40  max-h-60  min-h-30 ${theme.input} rounded-2xl p-6 focus:outline-none  transition-all duration-300`}
           />
           <div className="absolute inset-0 bg-gradient-to-r from-blue-500/10 to-purple-500/10 rounded-2xl pointer-events-none opacity-0 hover:opacity-100 transition-opacity duration-300"></div>
         </div>
