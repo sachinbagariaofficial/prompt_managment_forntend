@@ -1,12 +1,15 @@
 import { usePrompt } from "@/context/PromptContext";
 import { PropsTypes } from "@/lib/types";
 import { tones, toneSettingsMap } from "@/lib/utils";
+import Image from "next/image";
+
+import DeadpoolIcon from "../../../public/deadpool.png";
 
 const ToneSelector = ({ theme, isDarkMode }: PropsTypes) => {
   const { promptData, setPromptData } = usePrompt();
 
   const handleTone = (
-    value: "professional" | "creative" | "technical" | "empathetic"
+    value: "professional" | "creative" | "deadpool" | "friendly"
   ) => {
     setPromptData((prev) => ({
       ...prev,
@@ -60,8 +63,8 @@ const ToneSelector = ({ theme, isDarkMode }: PropsTypes) => {
                   tone.value as
                     | "professional"
                     | "creative"
-                    | "technical"
-                    | "empathetic"
+                    | "deadpool"
+                    | "friendly"
                 )
               }
               className={`group/tone relative p-4 rounded-2xl border transition-all duration-300 cursor-pointer ${
@@ -75,7 +78,19 @@ const ToneSelector = ({ theme, isDarkMode }: PropsTypes) => {
               }`}
             >
               <div className="flex items-center gap-3 mb-2">
-                <span className="text-2xl">{tone.icon}</span>
+                <span className="text-2xl">
+                  {tone.value === "deadpool" ? (
+                    <Image
+                      src={DeadpoolIcon}
+                      alt="Deadpool Icon"
+                      width={40}
+                      height={40}
+                      className="inline-block"
+                    />
+                  ) : (
+                    tone.icon
+                  )}
+                </span>
                 <div>
                   <div className={`${theme.text.primary} font-semibold`}>
                     {tone.label}

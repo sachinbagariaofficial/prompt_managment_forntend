@@ -12,7 +12,6 @@ const AdvancedControls = ({ theme, isDarkMode }: PropsTypes) => {
   ) => {
     setPromptData((prev) => ({
       ...prev,
-      toneStep: "",
       advancedStep: {
         ...prev.advancedStep,
         [key]: Number(value),
@@ -40,7 +39,7 @@ const AdvancedControls = ({ theme, isDarkMode }: PropsTypes) => {
               Advanced
             </h2>
             <p className={`${theme.text.accent} text-sm sm:text-base`}>
-              Fine-tune AI parameters
+              Side for fine-tune AI parameters
             </p>
           </div>
         </div>
@@ -82,7 +81,7 @@ const AdvancedControls = ({ theme, isDarkMode }: PropsTypes) => {
               <div className="absolute top-0 left-0 w-full h-full rounded-full bg-gradient-to-r from-blue-400/20 to-purple-500/20 animate-pulse" />
               <input
                 type="range"
-                min={0}
+                min={0.1}
                 max={2}
                 step={0.1}
                 onChange={(e) =>
@@ -134,7 +133,7 @@ const AdvancedControls = ({ theme, isDarkMode }: PropsTypes) => {
               <div className="absolute top-0 left-0 w-full h-full rounded-full bg-gradient-to-r from-green-400/20 to-teal-500/20 animate-pulse delay-200" />
               <input
                 type="range"
-                min={0}
+                min={1}
                 max={10}
                 step={1}
                 value={promptData.advancedStep.topK}
@@ -182,7 +181,7 @@ const AdvancedControls = ({ theme, isDarkMode }: PropsTypes) => {
               <div className="absolute top-0 left-0 w-full h-full rounded-full bg-gradient-to-r from-purple-400/20 to-pink-500/20 animate-pulse delay-400" />
               <input
                 type="range"
-                min={0}
+                min={0.01}
                 max={1}
                 step={0.01}
                 value={promptData.advancedStep.topP}

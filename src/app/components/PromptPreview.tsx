@@ -27,6 +27,7 @@ const PromptPreview = ({ theme, isDarkMode }: PropsTypes) => {
               top_p: promptData.advancedStep.topP,
               top_k: promptData.advancedStep.topK,
               context: promptData.contextStep || "",
+              tone: promptData.toneStep,
             }),
           }
         );

@@ -58,19 +58,19 @@ export const tones = [
     },
     {
         key: 2,
-        value: "technical",
-        label: "Technical",
-        desc: "Precise",
-        icon: "⚙️",
+        value: "deadpool",
+        label: "Deadpool",
+        desc: "Sarcastic",
+        icon: "",
         color: "from-green-500 to-teal-500",
     },
     {
         key: 3,
-        value: "empathetic",
-        label: "Empathetic",
-        desc: "Understanding",
-        icon: "💚",
-        color: "from-rose-500 to-orange-500",
+        value: "friendly",
+        label: "Friendly",
+        desc: "Casual",
+        icon: "😊",
+        color: "from-yellow-400 to-pink-400",
     },
 ];
 
@@ -98,8 +98,8 @@ export const contextMethods = [
 
 
 export const toneSettingsMap = {
-    professional: { temperature: 0.3, topK: 1, topP: 0.4 },
+    professional: { temperature: 0.2, topK: 1, topP: 0.4 },
     creative: { temperature: 0.8, topK: 10, topP: 0.9 },
-    technical: { temperature: 0.2, topK: 2, topP: 0.5 },
-    empathetic: { temperature: 0.6, topK: 5, topP: 0.7 },
+    deadpool: { temperature: 0.95, topK: 10, topP: 0.95 },
+    friendly: { temperature: 0.7, topK: 6, topP: 0.75 },
 };
