@@ -25,7 +25,7 @@ const PromptContext = createContext<PromptContextType | null>(null);
 // Default state for initialization
 const defaultPromptData: PromptData = {
   purposeStep: "",
-  toneStep: "",
+  toneStep: "professional",
   contextStep: "context-window",
   advancedStep: {
     temperature: 0.3,
