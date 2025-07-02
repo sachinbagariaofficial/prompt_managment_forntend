@@ -32,21 +32,19 @@ const PromptPreview = ({ theme, isDarkMode }: PropsTypes) => {
           }
         );
 
-        const {
-          data: {
-            choices: [
-              {
-                message: { content: promptResponse },
-              },
-            ],
-          },
-        } = await data.json();
+        const response = await data.json();
 
-        setAiResponse(promptResponse);
         setIsLoading(false);
         setShowPromtResult(true);
+        if (response.success === true) {
+          setAiResponse(response.data.choices[0].message.content);
+        } else {
+          setAiResponse(
+            "Due to high demand, we have reached the current token usage limit. Please try again in some time. We appreciate your patience!"
+          );
+        }
       } else {
-        alert("Please enter prompt text");
+        alert("Please enter prompt text greater than 10 characters");
       }
     } catch (err) {
       setIsLoading(false);

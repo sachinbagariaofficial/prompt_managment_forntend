@@ -22,8 +22,6 @@ const ToneSelector = ({ theme, isDarkMode }: PropsTypes) => {
       ...prev,
       advancedStep: advanceDefault,
     }));
-
-    console.log("firs22t", value, advanceDefault);
   };
 
   return (
