@@ -193,6 +193,16 @@ const PromptBuilder = () => {
           </div>
         </div>
       </div>
+      <div className="m-auto w-full flex justify-center p-2 z-20 relative">
+        <a
+          className={`${currentTheme.text.secondary} text-sm hidden md:block max-w-xl mx-auto leading-relaxed`}
+          href="https://www.linkedin.com/in/sachin-bagaria/"
+          target="_blank"
+          rel="noopener noreferrer"
+        >
+          @sachin_bagaria
+        </a>
+      </div>
     </div>
   );
 };
